@@ -28,9 +28,6 @@ response = urlopen(url)
 # from url in data
 data_json = json.loads(response.read())
 
-# print the json response
-print(data_json)
-
 arg = sys.argv
 argc = len(arg)
 if (argc > 2):
