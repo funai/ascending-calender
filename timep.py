@@ -3,14 +3,33 @@
 
 import sys
 import calendar
-from datetime import datetime
+from datetime import date
 
-today = datetime.now()
+today = date.today()
 this_month = today.month
 this_year = today.year
 #this_month = this_month + 1
 #this_year = 2004
 #leap_year = 2004
+
+# import urllib library
+from urllib.request import urlopen
+
+# import json
+import json
+# store the URL in url as
+# parameter for urlopen
+url = "https://holidays-jp.github.io/api/v1/date.json"
+
+# store the response of URL
+response = urlopen(url)
+
+# storing the JSON response
+# from url in data
+data_json = json.loads(response.read())
+
+# print the json response
+print(data_json)
 
 arg = sys.argv
 argc = len(arg)
@@ -40,13 +59,19 @@ prev_week = 0
 print("{0:04d}-{1:02d}:".format(this_year, this_month))
 #print("\tM%02d:" % this_month)
 for x in range(month_ends[this_month - 1], 0,  -1):
-    dt = datetime(this_year, this_month, x) 
+    dt = date(this_year, this_month, x) 
     iso_year, iso_week, iso_wday = dt.isocalendar()
     if iso_week != prev_week:
         #print("\t\tW%02d:" % iso_week)
         prev_week = iso_week
     hol = ''
+    hol_name = '' 
     if iso_wday > 5:
         hol = ' ⚪'
+    if dt.isoformat() in data_json:
+        hol = ' 🔴'
+        hol_name = data_json[dt.isoformat()]
     print("\t%s W%02d.%s D%03d:%s" \
      % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
+    if hol_name:
+        print("\t\t{}".format(hol_name))
