@@ -37,13 +37,16 @@ if calendar.isleap(this_year):
     year_ends = 366
 
 prev_week = 0
-print("Y%04d:" % this_year)
-print("\tM%02d:" % this_month)
+print("{0:04d}-{1:02d}:".format(this_year, this_month))
+#print("\tM%02d:" % this_month)
 for x in range(month_ends[this_month - 1], 0,  -1):
     dt = datetime(this_year, this_month, x) 
     iso_year, iso_week, iso_wday = dt.isocalendar()
     if iso_week != prev_week:
-        print("\t\tW%02d:" % iso_week)
+        #print("\t\tW%02d:" % iso_week)
         prev_week = iso_week
-    print("\t\t\t%s %s | D%03d:" \
-     % (dt.strftime('%m%d'), jp_isoweekday[iso_wday -1], dt.timetuple().tm_yday))
+    hol = ''
+    if iso_wday > 5:
+        hol = ' ⚪'
+    print("\t%s W%02d.%s D%03d:%s" \
+     % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
