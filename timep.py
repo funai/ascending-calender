@@ -53,13 +53,13 @@ if calendar.isleap(this_year):
     year_ends = 366
 
 prev_week = 0
-print("{0:04d}-{1:02d}:".format(this_year, this_month))
+# print("{0:04d}-{1:02d}:".format(this_year, this_month))
 #print("\tM%02d:" % this_month)
 for x in range(month_ends[this_month - 1], 0,  -1):
     dt = date(this_year, this_month, x) 
     iso_year, iso_week, iso_wday = dt.isocalendar()
     if iso_week != prev_week:
-        #print("\t\tW%02d:" % iso_week)
+        print("%04dW%02d:" % (iso_year, iso_week))
         prev_week = iso_week
     hol = ''
     hol_name = '' 
