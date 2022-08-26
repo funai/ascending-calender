@@ -50,7 +50,7 @@ else:
 for target_week in range(end_week, start_week -1, -1):
     monday = date.fromisocalendar(target_year, target_week, 1)
     sunday = date.fromisocalendar(target_year, target_week, 7)
-    print("{}W{:02}: {:%m%d}-{:%m%d}".format(target_year, target_week, monday, sunday))
+    print("W{:02}: {:%m%d}-{:%m%d}".format(target_week, monday, sunday))
     for day in range(7, 0, -1):
         dt = date.fromisocalendar(target_year, target_week, day)
         # dt = date(target_date) 
