@@ -66,25 +66,3 @@ for target_week in range(end_week, start_week -1, -1):
            % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
         if hol_name:
             print("\t\t{}".format(hol_name))
-
-sys.exit()
-
-# print("{0:04d}-{1:02d}:".format(target_year, target_month))
-#print("\tM%02d:" % target_month)
-for x in range(month_ends[target_month - 1], 0,  -1):
-    dt = date(target_year, target_month, x) 
-    iso_year, iso_week, iso_wday = dt.isocalendar()
-    if iso_week != prev_week:
-        print("%04dW%02d:" % (iso_year, iso_week))
-        prev_week = iso_week
-    hol = ''
-    hol_name = '' 
-    if iso_wday > 5:
-        hol = ' ⚪'
-    if dt.isoformat() in hol_data:
-        hol = ' 🔴'
-        hol_name = hol_data[dt.isoformat()]
-    print("\t%s W%02d.%s D%03d:%s" \
-     % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
-    if hol_name:
-        print("\t\t{}".format(hol_name))
