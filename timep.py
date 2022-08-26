@@ -33,15 +33,47 @@ if (argc == 2):
         print('Usage: python %s [1-12]' % arg[0])
         sys.exit()
 
-jp_isoweekday = ["月", "火", "水", "木", "金", "土", "日"]
-month_ends = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-year_ends = 365
+start_date = date(target_year, target_month, 1)
+s_yr, s_wk, s_wd = start_date.isocalendar()
+if s_wd < 5:
+    # Thu is included
+    start_week = s_wk
+else:
+    # start from next week
+    start_week = s_wk + 1
+print("Start %02d:W%02d" % (target_year, start_week))
+end_date = date(target_year, target_month, calendar.monthrange(target_year, target_month)[1])
+e_yr, e_wk, e_wd = end_date.isocalendar()
+if e_wd > 3:
+    # Thu is included
+    end_week = e_wk
+else:
+    # end with previous week
+    end_week = e_wk - 1
+print("End %02d:W%02d" % (target_year, end_week))
 
-if calendar.isleap(target_year):
-    month_ends[1] = 29
-    year_ends = 366
+for target_week in range(end_week, start_week -1, -1):
+    monday = date.fromisocalendar(target_year, target_week, 1)
+    sunday = date.fromisocalendar(target_year, target_week, 7)
+    print("{}W{}: {}-{}".format(target_year, target_week, monday.strftime("%m%d"), sunday.strftime("%m%d")))
+    for day in range(7, 0, -1):
+        dt = date.fromisocalendar(target_year, target_week, day)
+        # dt = date(target_date) 
+        iso_year, iso_week, iso_wday = dt.isocalendar()
+        hol = ''
+        hol_name = '' 
+        if iso_wday > 5:
+            hol = ' ⚪'
+        if dt.isoformat() in hol_data:
+            hol = ' 🔴'
+            hol_name = hol_data[dt.isoformat()]
+        print("\t%s W%02d.%s D%03d:%s" \
+           % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
+        if hol_name:
+            print("\t\t{}".format(hol_name))
 
-prev_week = 0
+sys.exit()
+
 # print("{0:04d}-{1:02d}:".format(target_year, target_month))
 #print("\tM%02d:" % target_month)
 for x in range(month_ends[target_month - 1], 0,  -1):
