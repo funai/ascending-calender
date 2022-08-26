@@ -33,29 +33,24 @@ if (argc == 2):
         print('Usage: python %s [1-12]' % arg[0])
         sys.exit()
 
-start_date = date(target_year, target_month, 1)
-s_yr, s_wk, s_wd = start_date.isocalendar()
-if s_wd < 5:
-    # Thu is included
-    start_week = s_wk
-else:
-    # start from next week
-    start_week = s_wk + 1
-print("Start %02d:W%02d" % (target_year, start_week))
+# first week of the year/month is where the 4th date of the year/month belongs to. 
+start_date = date(target_year, target_month, 4)
+start_week = start_date.isocalendar()[1]
+#print("Start %02d:W%02d" % (target_year, start_week))
 end_date = date(target_year, target_month, calendar.monthrange(target_year, target_month)[1])
 e_yr, e_wk, e_wd = end_date.isocalendar()
 if e_wd > 3:
-    # Thu is included
+    # Thu is included:w
     end_week = e_wk
 else:
     # end with previous week
     end_week = e_wk - 1
-print("End %02d:W%02d" % (target_year, end_week))
+#print("End %02d:W%02d" % (target_year, end_week))
 
 for target_week in range(end_week, start_week -1, -1):
     monday = date.fromisocalendar(target_year, target_week, 1)
     sunday = date.fromisocalendar(target_year, target_week, 7)
-    print("{}W{}: {}-{}".format(target_year, target_week, monday.strftime("%m%d"), sunday.strftime("%m%d")))
+    print("{}W{}: {:%m%d}-{:%m%d}".format(target_year, target_week, monday, sunday))
     for day in range(7, 0, -1):
         dt = date.fromisocalendar(target_year, target_week, day)
         # dt = date(target_date) 
