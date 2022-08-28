@@ -31,7 +31,7 @@ if (argc == 2):
                 target_year = this_year
             target_month = x
         elif x >= 197001:
-            target_year = int(arg[1][0:3])
+            target_year = int(arg[1][0:4])
             target_month = int(arg[1][4:])
     except ValueError:
         print('Usage: python %s [1-12]' % arg[0])
