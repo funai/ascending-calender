@@ -24,11 +24,15 @@ if (argc > 2):
 if (argc == 2):
     try:
         x = int(arg[1])
-        if x < this_month:
-            target_year = this_year + 1
-        else:
-            target_year = this_year
-        target_month = x
+        if x <= 12:
+            if x < this_month:
+                target_year = this_year + 1
+            else:
+                target_year = this_year
+            target_month = x
+        elif x >= 197001:
+            target_year = int(arg[1][0:3])
+            target_month = int(arg[1][4:])
     except ValueError:
         print('Usage: python %s [1-12]' % arg[0])
         sys.exit()
