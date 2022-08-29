@@ -24,18 +24,27 @@ if (argc > 2):
 if (argc == 2):
     try:
         x = int(arg[1])
-        if x <= 12:
+        if len(arg[1]) == 4:
+            target_year = 2000 + int(arg[1][0:2])
+            target_month = int(arg[1][2:])
+            print("{}-{}".format(target_year, target_month), file=sys.stderr)
+        elif x <= 12:
             if x < this_month:
                 target_year = this_year + 1
             else:
                 target_year = this_year
             target_month = x
+            print("{}-{}".format(target_year, target_month), file=sys.stderr)
         elif x >= 197001:
             target_year = int(arg[1][0:4])
             target_month = int(arg[1][4:])
+            print("{}-{}".format(target_year, target_month), file=sys.stderr)
+        else:
+            print('Usage: python %s [1-12]|YYMM|YYYYMM' % arg[0], file=sys.stderr)
+            sys.exit(1)
     except ValueError:
-        print('Usage: python %s [1-12]' % arg[0])
-        sys.exit()
+        print('Usage: python %s [1-12]|YYMM|YYYYMM' % arg[0], file=sys.stderr)
+        sys.exit(1)
 
 # first week of the year/month is where the 4th date of the year/month belongs to. 
 start_date = date(target_year, target_month, 4)
