@@ -52,7 +52,7 @@ start_week = start_date.isocalendar()[1]
 end_date = date(target_year, target_month, calendar.monthrange(target_year, target_month)[1])
 e_yr, e_wk, e_wd = end_date.isocalendar()
 if e_wd > 3:
-    # Thu is included:w
+    # Thu is included in the week
     end_week = e_wk
 else:
     # end with previous week
