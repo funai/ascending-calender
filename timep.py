@@ -70,9 +70,9 @@ for target_week in range(end_week, start_week -1, -1):
         hol = ''
         hol_name = '' 
         if iso_wday > 5:
-            hol = ' ⚪'
+            hol = ' ○'
         if dt.isoformat() in hol_data:
-            hol = ' 🔴'
+            hol = ' ◉'
             hol_name = hol_data[dt.isoformat()]
         print("\t%s W%02d.%s D%03d:%s" \
            % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
