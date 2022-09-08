@@ -43,6 +43,7 @@ def print_cal(target_year, target_month, hol_data):
             print("\t%s W%02d.%s D%03d:%s" \
                % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
             if hol_name:
+                hol_name = hol_name.replace('休日', '振替休日 <')
                 print("\t\t{}".format(hol_name))
     return
 
