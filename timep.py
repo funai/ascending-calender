@@ -18,11 +18,15 @@ def print_cal(target_year, target_month, hol_data):
     end_date = date(target_year, target_month, calendar.monthrange(target_year, target_month)[1])
     e_yr, e_wk, e_wd = end_date.isocalendar()
     if e_wd > 3:
-        # Thu is included in the week
+        # Thu is included in the month
         end_week = e_wk
     else:
-        # end with previous week
-        end_week = e_wk - 1
+        # Last date of the month belongs to the first week of the next MONTH
+        if e_wk > 1:
+            end_week = e_wk - 1
+        else:
+            # Last date of the month belongs to the first week of the next YEAR
+            end_week = 52
     #print("End %02d:W%02d" % (target_year, end_week))
 
     for target_week in range(end_week, start_week -1, -1):
