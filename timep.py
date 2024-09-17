@@ -29,6 +29,9 @@ def print_cal(target_year, target_month, hol_data):
             end_week = 52
     #print("End %02d:W%02d" % (target_year, end_week))
 
+    #dow_str = 'MTWRFSU'
+    #dow_str = 'MonTueWedThuFriSatSun'
+
     for target_week in range(end_week, start_week -1, -1):
         monday = date.fromisocalendar(target_year, target_week, 1)
         sunday = date.fromisocalendar(target_year, target_week, 7)
@@ -46,6 +49,8 @@ def print_cal(target_year, target_month, hol_data):
                 hol_name = hol_data[dt.isoformat()]
             print("\t%s W%02d.%s D%03d:%s" \
                % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
+               # % (dt.strftime('%m%d'), iso_week, dow_str[iso_wday - 1], dt.timetuple().tm_yday, hol))
+               # % (dt.strftime('%m%d'), iso_week, dow_str[(iso_wday - 1) * 3: (iso_wday - 1) * 3 + 3 ], dt.timetuple().tm_yday, hol))
             if hol_name:
                 hol_name = hol_name.replace('休日', '振替休日 <')
                 print("\t\t{}".format(hol_name))
