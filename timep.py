@@ -61,10 +61,8 @@ def get_holiday():
     hol_data = {}
     for line in lines:
         date_str, hol_name = line.split(",")
-        # date_object = datetime.strptime(date_str, '%Y/%m/%d')
-        # use the unpacking operator * to pass the year, month, and day as separate arguments
-        date_object = date(*[int(i) for i in date_str.split('/')])
-        iso_date = date_object.strftime('%Y-%m-%d')
+        year, month, day = [int(x) for x in date_str.split("/")]
+        iso_date = f"{year}-{month:02}-{day:02}"
         hol_data[iso_date] = hol_name
 
     # print(hol_data)
