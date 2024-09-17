@@ -45,7 +45,8 @@ def print_cal(target_year, target_month, hol_data):
             if iso_wday > 5:
                 hol = ' ○'
             if dt.isoformat() in hol_data:
-                hol = ' ◉'
+                # hol = ' ◉'
+                hol = ' ●'
                 hol_name = hol_data[dt.isoformat()]
             print("\t%s W%02d.%s D%03d:%s" \
                % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
