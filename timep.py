@@ -51,14 +51,31 @@ def print_cal(target_year, target_month, hol_data):
                 print("\t\t{}".format(hol_name))
     return
 
+def get_holiday():
+    csv_url = "https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv"
+    with urlopen(csv_url) as f:
+        lines = f.read().decode('cp932').splitlines()
+    # remove header
+    lines.pop(0)
+
+    hol_data = {}
+    for line in lines:
+        date_str, hol_name = line.split(",")
+        # date_object = datetime.strptime(date_str, '%Y/%m/%d')
+        # use the unpacking operator * to pass the year, month, and day as separate arguments
+        date_object = date(*[int(i) for i in date_str.split('/')])
+        iso_date = date_object.strftime('%Y-%m-%d')
+        hol_data[iso_date] = hol_name
+
+    # print(hol_data)
+    return hol_data # dict
+
 def main():
     today = date.today()
     this_month = today.month
     this_year = today.year
 
-    api_url = "https://holidays-jp.github.io/api/v1/date.json"
-    response = urlopen(api_url)
-    hol_data = json.loads(response.read())
+    hol_data = get_holiday()
 
     arg = sys.argv
     argc = len(arg)
