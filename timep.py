@@ -35,7 +35,7 @@ def print_cal(target_year, target_month, hol_data):
     for target_week in range(end_week, start_week -1, -1):
         monday = date.fromisocalendar(target_year, target_week, 1)
         sunday = date.fromisocalendar(target_year, target_week, 7)
-        print("W{:02}: {:%m%d}-{:%m%d}".format(target_week, monday, sunday))
+        print(f"W{target_week:02}: {monday:%m%d}-{sunday:%m%d} Y{target_year:4d}")
         for day in range(7, 0, -1):
             dt = date.fromisocalendar(target_year, target_week, day)
             # dt = date(target_date) 
@@ -48,12 +48,9 @@ def print_cal(target_year, target_month, hol_data):
                 # hol = ' ◉'
                 hol = ' ●'
                 hol_name = hol_data[dt.isoformat()]
-            print("\t%s W%02d.%s D%03d:%s" \
-               % (dt.strftime('%m%d'), iso_week, iso_wday, dt.timetuple().tm_yday, hol))
-               # % (dt.strftime('%m%d'), iso_week, dow_str[iso_wday - 1], dt.timetuple().tm_yday, hol))
-               # % (dt.strftime('%m%d'), iso_week, dow_str[(iso_wday - 1) * 3: (iso_wday - 1) * 3 + 3 ], dt.timetuple().tm_yday, hol))
+            print(f"\t{dt:%m%d} Y{dt.year:4d} W{iso_week:02}.{iso_wday} D{dt:%j}:{hol}")
             if hol_name:
-                hol_name = hol_name.replace('休日', '振替休日 <')
+                hol_name = hol_name.replace('休日', '振替休日')
                 print("\t\t{}".format(hol_name))
     return
 
