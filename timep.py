@@ -48,7 +48,7 @@ def print_cal(target_year, target_month, hol_data):
                 # hol = ' ◉'
                 hol = ' ●'
                 hol_name = hol_data[dt.isoformat()]
-            print(f"\t{dt:%m%d} Y{dt.year:4d} W{iso_week:02}.{iso_wday} D{dt:%j}:{hol}")
+            print(f"\t{dt:%m%d} Y{dt:%Y.%j} W{iso_week:02}.{iso_wday}:{hol}")
             if hol_name:
                 hol_name = hol_name.replace('休日', '振替休日')
                 print("\t\t{}".format(hol_name))
